@@ -38,7 +38,7 @@ public class WebSecurity {
             .formLogin(AbstractHttpConfigurer::disable) // 폼 로그인 비활성화
 
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/users/health-check").permitAll() // 인증 관련 경로는 모두 허용
+                .requestMatchers("/users/health-check", "/users/register").permitAll() // 인증 관련 경로는 모두 허용
                 .requestMatchers("/h2-console/**").permitAll()  // 특정 경로 허용
                 .requestMatchers("/**").access(
                     new WebExpressionAuthorizationManager(

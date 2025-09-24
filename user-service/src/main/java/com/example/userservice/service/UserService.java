@@ -24,9 +24,8 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User registerUser(UserRegisterRequestDto requestDto) {
-        // DTO를 기반으로 User 엔티티 생성
         User user = User.builder()
-            .username(requestDto.getUsername())
+            .name(requestDto.getUsername())
             .password(passwordEncoder.encode(requestDto.getPassword())) // 비밀번호 인코딩
             .email(requestDto.getEmail())
             .role(requestDto.getRole()) // DTO에서 받은 역할 설정

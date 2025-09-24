@@ -25,11 +25,18 @@ public class UserController {
     @GetMapping("/health-check")
     public String status() {
         return String.format("It's Working in User Service"
-                + ", port(local.server.port)=" + env.getProperty("local.server.port")
-                + ", port(server.port)=" + env.getProperty("server.port"));
+            + ", port(local.server.port)=" + env.getProperty("local.server.port")
+            + ", port(server.port)=" + env.getProperty("server.port")
+            + ", gateway ip(env)=" + env.getProperty("gateway.ip")
+            + ", rabbitmq host=" + env.getProperty("spring.application.rabbitmq.host")
+            + ", rabbitmq port=" + env.getProperty("spring.application.rabbitmq.port")
+            + ", rabbitmq username=" + env.getProperty("spring.application.rabbitmq.username")
+            + ", rabbitmq password=" + env.getProperty("spring.application.rabbitmq.password")
+            + ", token secret=" + env.getProperty("jwt.secret")
+            + ", token expiration time=" + env.getProperty("jwt.expiration"));
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<CommonResponseDto<UserResponseDto>> registerUser(@RequestBody UserRegisterRequestDto requestDto) {
         User user = userService.registerUser(requestDto);
 

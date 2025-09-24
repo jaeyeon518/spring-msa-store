@@ -7,11 +7,6 @@ encrypt:
 spring:
   application:
     name: config-service
-  #  rabbitmq:
-  #    host: ${RABBITMQ_HOST}
-  #    port: ${RABBITMQ_PORT}
-  #    username: ${RABBITMQ_USERNAME}
-  #    password: ${RABBITMQ_PASSWORD}
   profiles:
     active: git
   cloud:
@@ -30,4 +25,4 @@ management:
           - health
           - beans
           - info
-#          - busrefresh
+          - busrefresh
