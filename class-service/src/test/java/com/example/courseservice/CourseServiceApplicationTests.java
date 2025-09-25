@@ -1,10 +1,10 @@
-package com.example.classservice;
+package com.example.courseservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ClassServiceApplicationTests {
+class CourseServiceApplicationTests {
 
     @Test
     void contextLoads() {

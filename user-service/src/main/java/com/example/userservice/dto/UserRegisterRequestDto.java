@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @Getter
 public class UserRegisterRequestDto {
-    private String username;
+    private String name;
     private String password;
     private String email;
+    private String phone;
     private UserRole role; // Role can also be a simple String
 }

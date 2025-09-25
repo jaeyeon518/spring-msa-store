@@ -1,6 +1,7 @@
 package com.example.userservice.security;
 
 import com.example.userservice.service.UserService;
+import com.example.userservice.utils.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;

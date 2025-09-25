@@ -1,11 +1,10 @@
-package com.example.userservice.controller;
+package com.example.courseservice.controller;
 
-import com.example.userservice.common.CommonResponseDto;
-import com.example.userservice.dto.UserRegisterRequestDto;
-import com.example.userservice.dto.UserResponseDto;
-import com.example.userservice.dto.UserUpdateRequestDto;
-import com.example.userservice.entity.User;
-import com.example.userservice.service.UserService;
+import com.example.courseservice.common.CommonResponseDto;
+import com.example.courseservice.dto.*;
+import com.example.courseservice.entity.Course;
+import com.example.courseservice.entity.CourseSession;
+import com.example.courseservice.service.CourseSessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/sessions")
 @Slf4j
-public class UserController {
+public class CourseSessionController {
 
     private final Environment env;
-
-    private final UserService userService;
+    private final CourseSessionService courseSessionService;
 
     @GetMapping("/health-check")
     public String status() {
@@ -33,38 +31,37 @@ public class UserController {
             + ", rabbitmq port=" + env.getProperty("spring.application.rabbitmq.port")
             + ", rabbitmq username=" + env.getProperty("spring.application.rabbitmq.username")
             + ", rabbitmq password=" + env.getProperty("spring.application.rabbitmq.password")
-            + ", token secret=" + env.getProperty("jwt.secret")
-            + ", token expiration time=" + env.getProperty("jwt.expiration"));
+        );
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<CommonResponseDto<UserResponseDto>> registerUser(@RequestBody UserRegisterRequestDto requestDto) {
-        User user = userService.registerUser(requestDto);
+    @PostMapping
+    public ResponseEntity<CommonResponseDto<CourseSessionResponseDto>> create(@RequestBody CourseSessionRequestDto requestDto) {
+        CourseSession courseSession = courseSessionService.create(requestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            new CommonResponseDto<>(UserResponseDto.fromEntity(user))
+            new CommonResponseDto<>(CourseSessionResponseDto.fromEntity(courseSession))
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommonResponseDto<UserResponseDto>> getUserById(@PathVariable Long id) {
-        User user = userService.findUser(id);
+    public ResponseEntity<CommonResponseDto<CourseSessionResponseDto>> findById(@PathVariable Long id) {
+        CourseSession courseSession = courseSessionService.findUser(id);
         return ResponseEntity.status(HttpStatus.OK).body(
-            new CommonResponseDto<>(UserResponseDto.fromEntity(user))
+            new CommonResponseDto<>(CourseSessionResponseDto.fromEntity(courseSession))
         );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommonResponseDto<UserResponseDto>> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequestDto requestDto) {
-        User user = userService.updateUser(id, requestDto);
+    public ResponseEntity<CommonResponseDto<CourseSessionResponseDto>> updateUser(@PathVariable Long id, @RequestBody CourseSessionUpdateRequestDto requestDto) {
+        CourseSession courseSession = courseSessionService.update(id, requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(
-            new CommonResponseDto<>(UserResponseDto.fromEntity(user))
+            new CommonResponseDto<>(CourseSessionResponseDto.fromEntity(courseSession))
         );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CommonResponseDto<Void>> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+        courseSessionService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new CommonResponseDto<>());
     }
 }

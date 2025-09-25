@@ -24,10 +24,16 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User registerUser(UserRegisterRequestDto requestDto) {
+
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
+            throw new RuntimeException("중복된 이메일입니다.");
+        }
+
         User user = User.builder()
-            .name(requestDto.getUsername())
+            .name(requestDto.getName())
             .password(passwordEncoder.encode(requestDto.getPassword())) // 비밀번호 인코딩
             .email(requestDto.getEmail())
+            .phone(requestDto.getPhone())
             .role(requestDto.getRole()) // DTO에서 받은 역할 설정
             .build();
 
@@ -56,7 +62,7 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findById(Long.valueOf(username))
             .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return new UserDetailsImpl(user);
