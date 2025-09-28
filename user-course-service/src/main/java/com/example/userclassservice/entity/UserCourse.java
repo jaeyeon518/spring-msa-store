@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "user_class",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "class_id"}))
-public class UserClass {
+@Table(name = "user_courses",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}))
+public class UserCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class UserClass {
     @Column(name = "user_id", nullable = false)
     private Long userId;  // user-service의 User ID
 
-    @Column(name = "class_id", nullable = false)
-    private Long classId; // class-service의 Class ID
+    @Column(name = "course_id", nullable = false)
+    private Long courseId; // class-service의 Class ID
 
     private LocalDateTime joinedAt = LocalDateTime.now();
     private Integer attendanceCount = 0;

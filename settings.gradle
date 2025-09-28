@@ -1,3 +1,3 @@
 rootProject.name = 'spring-msa-store'
 
-include("service-discovery", "apigateway-service", "user-service", "config-service", "course-service")
+include("service-discovery", "apigateway-service", "user-service", "config-service", "course-service", "user-course-service")
